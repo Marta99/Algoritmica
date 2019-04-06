@@ -51,7 +51,6 @@ def main():
     if suma_comprovacio == sum_string and sum_string != sum_moduls:
         print('OK', file=sys.stderr)
         print('OK', file=outputfile)
-        print("S'ha produit un canvi en els caràcters afegits")
     elif suma_comprovacio == sum_string:
         print('OK', file=sys.stderr)
         print('OK', file=outputfile)

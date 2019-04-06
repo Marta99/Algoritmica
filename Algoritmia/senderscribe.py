@@ -8,10 +8,10 @@ import sys
 
 def suma(vector):
     """ Descripció suma """
-    suma = 0
-    for x in vector:
-        suma += x
-    return suma
+    res = 0
+    for valor in vector:
+        res += valor
+    return res
 
 
 def main_text(byte, vector, inputfile, outputfile):
@@ -27,8 +27,8 @@ def primer_check(vector, outputfile):
     """ Comentari """
     print(' ', end='', file=outputfile)
     print(' ', end='', file=outputfile)
-    for x in vector:
-        print(x, end='', file=outputfile)
+    for valor in vector:
+        print(valor, end='', file=outputfile)
 
 
 def main():
@@ -61,10 +61,11 @@ def recursive_main():
     byte = sys.stdin.read(1)
     main_text_r(byte, vector)
 
+    #TO-DO: recurive valor
     print(' ', end='', file=outputfile)
     print(' ', end='', file=outputfile)
-    for x in vector:
-        print(x, end='', file=outputfile)
+    for valor in vector:
+        print(valor, end='', file=outputfile)
 
     print(' ', end='',
           file=outputfile)
