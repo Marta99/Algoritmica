@@ -4,23 +4,27 @@
 
 import sys
 import string
-import filecmp
 
 def main():
     """Check correctness of assignment"""
     original = open(sys.argv[1])
     sent = open(sys.argv[2])
-    #noisy = open(sys.argv[3])
+    noisy = open(sys.argv[3])
     result = open(sys.argv[4])
 
     indomain = True
     counter = 0
     byte = sent.read(1)
+    byte_noisy = noisy.read(1)
+    files_different = -1
     while byte:
         if byte not in string.ascii_uppercase + string.digits + string.whitespace:
             indomain = False
+        if byte != byte_noisy:
+            files_different = counter
         counter += 1
         byte = sent.read(1)
+        byte_noisy = noisy.read(1)
 
     if not indomain:
         print("Not in domain")
@@ -38,14 +42,18 @@ def main():
     result_line = result.readlines()
     result_line = result_line[0].strip()
     print(' ' + result_line)
-    #print(sys.argv[2], sys.argv[3])
-    #print(filecmp.cmp(sys.argv[2], sys.argv[3]))
-    if (filecmp.cmp(sys.argv[2], sys.argv[3],shallow=False) and result_line == 'OK') or \
-     (not filecmp.cmp(sys.argv[2], sys.argv[3], shallow=False) and result_line == 'KO'):
-        sys.exit(0)
+    if files_different < 0:
+        if result_line == 'OK':
+            sys.exit(0)
+        else:
+            print('Detection error: sent file not modified')
+            sys.exit(1)
     else:
-        print("Not detected")
-        sys.exit(1)
+        if result_line == 'KO':
+            sys.exit(0)
+        else:
+            print('Detection error: sent file has been modified in byte ' + str(files_different))
+            sys.exit(1)
 
 if __name__ == "__main__":
     main()

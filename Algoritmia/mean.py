@@ -8,13 +8,13 @@ def mean(input_file):
     ok_accum = 0
     counter = 0
     for line in input_file:
-        if len(line.split()) > 2:
+        if len(line.split()) != 2:
             print("Error in mean: " + line)
         increment, ok = line.split()
         increment_accum += float(increment)
         if ok == 'OK':
             ok_accum += 1
-    counter += 1
+        counter += 1
 
     if counter == 0:
         print(0)

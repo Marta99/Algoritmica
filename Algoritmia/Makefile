@@ -6,6 +6,10 @@ CHECKER_NOISE=05 10 15 20 25
 CORRECTOR_NOISE=05 10 15
 NOISE_VALUES=$(CHECKER_NOISE)
 LENGTH_VALUES=20 40 60 80 100
+EXPERIMENT_VALUES=2000 4000 6000 8000 10000
+
+experiment:
+	@for L in $(EXPERIMENT_VALUES); do echo -n $$L; $$(which time) -p make -s test LENGTH=$$L 2>&1 | grep user | cut -c5- ; done
 
 test-length:
 	@for L in $(LENGTH_VALUES); do make -s test-noise LENGTH=$$L || exit $$?; done
