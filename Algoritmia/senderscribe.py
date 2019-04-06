@@ -16,14 +16,11 @@ def main():
     inputfile = sys.stdin
     outputfile = sys.stdout
 
-    #checker = 0
     vector = []
-    #caracters_passats = []
     byte = inputfile.read(1)
     while byte:
-        #caracters_passats.append(byte)
         print(byte, end='', file=outputfile)
-        caracter = ord(byte)%8  #AIXI O MODUL 8????????????????????????????????
+        caracter = ord(byte)%8
         vector.append(caracter)
         byte = inputfile.read(1)
     
