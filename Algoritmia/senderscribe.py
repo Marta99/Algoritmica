@@ -23,7 +23,7 @@ def main():
     while byte:
         #caracters_passats.append(byte)
         print(byte, end='', file=outputfile)
-        caracter = ord(byte)%9  #AIXI O MODUL 8????????????????????????????????
+        caracter = ord(byte)%8  #AIXI O MODUL 8????????????????????????????????
         vector.append(caracter)
         byte = inputfile.read(1)
     
@@ -36,6 +36,34 @@ def main():
     print(' ', end='', file=outputfile)   #utilitzem aquest espai per a separar els caràcters afegits del resultat de la suma d'aquests
     suma_comprovacio = suma(vector)
     print(suma_comprovacio, end='', file=outputfile)
+
+def recursive_main():
+    """ Comentaris"""
+    inputfile = sys.stdin
+    outputfile = sys.stdout
+
+    vector = []
+    byte = sys.stdin.read(1)
+    recursive(byte, vector)
+
+    print(' ', end='', file=outputfile)
+    print(' ', end='',
+          file=outputfile)  # posem dos espais per a poder-ho diferenciar de lsespais que hi ha al missatge que ens passen
+    for x in vector:
+        print(x, end='', file=outputfile)
+
+    print(' ', end='',
+          file=outputfile)  # utilitzem aquest espai per a separar els caràcters afegits del resultat de la suma d'aquests
+    print(suma(vector), end='', file=outputfile)
+
+def recursive(byte, vector):
+    """ Holaa """
+    if byte:
+        print(byte, end='', file=sys.stdout)
+        vector.append(ord(byte) % 8)
+        recursive(sys.stdin.read(1), vector)
+
+
 
 if __name__ == "__main__":
     main()
