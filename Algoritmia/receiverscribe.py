@@ -69,19 +69,14 @@ def main():
     valor_primer_sumatori = llegir_resultat_suma(inputfile)
     valor_segon_sumatori = llegir_resultat_suma(inputfile)
 
-    print('Suma del text: ' + str(suma_text), file=sys.stderr)
-    print('Valor del checker: ' + str(suma_checker_text), file=sys.stderr)
-    print('Valor del sumatori: ' + str(valor_primer_sumatori) + ' & ' + str(valor_segon_sumatori) + '.', file=sys.stderr)
-
     if not trobada_diferencia and suma_text == suma_checker_text and valor_primer_sumatori == suma_checker_text and valor_segon_sumatori == suma_checker_text:
-        print('OK', file=sys.stderr)
         print('OK', file=outputfile)
     else:
-        if trobada_diferencia and valor_segon_sumatori == suma_checker_text:
-            print('Posició: ' + str(posicio_errata) + ' ' + vector[posicio_errata], file=sys.stderr)
-            print('Possible caràcter: ' + chr(num_caracter_error + ord('0')), file=sys.stderr)
-        print('KO', file=sys.stderr)
-        print('KO', file=outputfile)
+        if trobada_diferencia and valor_primer_sumatori == suma_checker_text:
+            print('KO', file=outputfile)
+            print(str(posicio_errata) + ' ' + chr(num_caracter_error + ord('0')), file=outputfile)
+        else:
+            print('KO', file=outputfile)
 
 
 if __name__ == "__main__":
