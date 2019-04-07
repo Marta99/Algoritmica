@@ -7,7 +7,7 @@ import sys
 
 
 def suma(vector):
-    """ Descripció suma """
+    """ Suma tots els valors del vector i retorna el seu resultat """
     res = 0
     for valor in vector:
         res += valor
@@ -15,7 +15,7 @@ def suma(vector):
 
 
 def main_text(byte, vector, inputfile, outputfile):
-    """ Holaaa """
+    """ Llegeix el text i el modul 10 del seu símbol el guarda a un vector"""
     while byte:
         print(byte, end='', file=outputfile)
         caracter = ord(byte) % 10
@@ -24,7 +24,7 @@ def main_text(byte, vector, inputfile, outputfile):
 
 
 def primer_check(vector, outputfile):
-    """ Comentari """
+    """ Guarda a l'outputfile el valors del vector """
     print(' ', end='', file=outputfile)
     print(' ', end='', file=outputfile)
     for valor in vector:
@@ -54,24 +54,29 @@ def main_text_r(byte, vector):
         vector.append(ord(byte) % 8)
         main_text_r(sys.stdin.read(1), vector)
 
+def primer_check_r(vector, outputfile):
+    """ Guarda a l'outputfile el valors del vector """
+    if vector is []:
+        print(vector[0], end='', file=outputfile)
+        primer_check_r(vector[1:], outputfile)
 
-def recursive_main():
-    """ Comentaris"""
+
+def main_r():
+    """Reads from stdin and outputs to stdout the same sequence of bytes plus a hash byte"""
+    inputfile = sys.stdin
     outputfile = sys.stdout
 
     vector = []
-    byte = sys.stdin.read(1)
-    main_text_r(byte, vector)
-
-    #TO-DO: recurive valor
+    main_text_r(inputfile.read(1), vector)
     print(' ', end='', file=outputfile)
     print(' ', end='', file=outputfile)
-    for valor in vector:
-        print(valor, end='', file=outputfile)
+    primer_check_r(vector, outputfile)
 
-    print(' ', end='',
-          file=outputfile)
-    print(suma(vector), end='', file=outputfile)
+    print(' ', end='', file=outputfile)
+    resultat = suma(vector)
+    print(resultat, end='', file=outputfile)
+    print(' ', end='', file=outputfile)
+    print(resultat, end='', file=outputfile)
 
 
 if __name__ == "__main__":

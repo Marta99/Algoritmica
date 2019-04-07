@@ -6,14 +6,14 @@ the hash byte"""
 import sys
 
 def sumatori_vector(vector):
-    """ Comentari """
+    """ Suma tots els valors del vector i retorna el seu resultat"""
     result = 0
     for valor in vector:
         result += ord(valor) % 10
     return result
 
 def llegir_resultat_suma(inputfile):
-    """ Comentari """
+    """ Llegeix un dels sumatoris del text"""
     valor_sumatori = []
     byte = inputfile.read(1)
     while byte and byte != ' ':
@@ -23,14 +23,14 @@ def llegir_resultat_suma(inputfile):
     return int(valor_sumatori)
 
 def valor_diferent(valor1, valor2, valor3, valor4):
-    if valor1 != valor2 and valor1 != valor3:
+    """ Retorna el valor diferent dels 4 """
+    if valor1 not in (valor2, valor3):
         return valor1
-    elif valor1 != valor2 and valor2 != valor3:
+    if valor2 not in (valor1, valor2):
         return valor2
-    elif valor1 != valor3 and valor3 != valor4:
+    if valor3 not in (valor1, valor4):
         return valor3
-    else:
-        return valor4
+    return valor4
 
 def main():
     """Reads from stdin and outputs to stdout the same sequence of bytes and checks the hash byte"""
@@ -40,17 +40,14 @@ def main():
     vector = []
     byte = inputfile.read(1)
     byte2 = inputfile.read(1)
-    posicio=2
+    posicio = 2
     while byte != ' ' or byte2 != ' ':
         vector.append(byte)
-        byte=byte2
-        posicio+=1
+        byte = byte2
+        posicio += 1
         byte2 = inputfile.read(1)
-    
     suma_text = sumatori_vector(vector)
     byte = inputfile.read(1)
-
-
     suma_checker_text = 0
     posicio_vector = 0
     trobada_diferencia = False
@@ -69,7 +66,9 @@ def main():
     valor_primer_sumatori = llegir_resultat_suma(inputfile)
     valor_segon_sumatori = llegir_resultat_suma(inputfile)
 
-    if not trobada_diferencia and suma_text == suma_checker_text and valor_primer_sumatori == suma_checker_text and valor_segon_sumatori == suma_checker_text:
+    if not trobada_diferencia and suma_text == suma_checker_text and\
+            valor_primer_sumatori == suma_checker_text and\
+            valor_segon_sumatori == suma_checker_text:
         print('OK', file=outputfile)
     else:
         if trobada_diferencia and valor_primer_sumatori == suma_checker_text:
