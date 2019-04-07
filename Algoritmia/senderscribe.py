@@ -18,7 +18,7 @@ def main_text(byte, vector, inputfile, outputfile):
     """ Holaaa """
     while byte:
         print(byte, end='', file=outputfile)
-        caracter = ord(byte) % 8
+        caracter = ord(byte) % 10
         vector.append(caracter)
         byte = inputfile.read(1)
 
@@ -42,6 +42,8 @@ def main():
 
     print(' ', end='', file=outputfile)
     resultat = suma(vector)
+    print(resultat, end='', file=outputfile)
+    print(' ', end='', file=outputfile)
     print(resultat, end='', file=outputfile)
 
 

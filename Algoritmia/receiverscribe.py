@@ -5,11 +5,32 @@ the hash byte"""
 
 import sys
 
-def suma(vector):
-    suma = 0
-    for x in vector:
-        suma+=x
-    return suma
+def sumatori_vector(vector):
+    """ Comentari """
+    result = 0
+    for valor in vector:
+        result += ord(valor) % 10
+    return result
+
+def llegir_resultat_suma(inputfile):
+    """ Comentari """
+    valor_sumatori = []
+    byte = inputfile.read(1)
+    while byte and byte != ' ':
+        valor_sumatori.append(byte)
+        byte = inputfile.read(1)
+    valor_sumatori = ''.join(valor_sumatori)
+    return int(valor_sumatori)
+
+def valor_diferent(valor1, valor2, valor3, valor4):
+    if valor1 != valor2 and valor1 != valor3:
+        return valor1
+    elif valor1 != valor2 and valor2 != valor3:
+        return valor2
+    elif valor1 != valor3 and valor3 != valor4:
+        return valor3
+    else:
+        return valor4
 
 def main():
     """Reads from stdin and outputs to stdout the same sequence of bytes and checks the hash byte"""
@@ -21,40 +42,44 @@ def main():
     byte2 = inputfile.read(1)
     posicio=2
     while byte != ' ' or byte2 != ' ':
-        caracter = ord(byte)%8
-        vector.append(caracter)
+        vector.append(byte)
         byte=byte2
         posicio+=1
         byte2 = inputfile.read(1)
     
-    suma_comprovacio = suma(vector)
-    byte=inputfile.read(1)
+    suma_text = sumatori_vector(vector)
+    byte = inputfile.read(1)
 
-    sum_string = []
-    sum_moduls = 0
 
-    # Calcules la suma
+    suma_checker_text = 0
+    posicio_vector = 0
+    trobada_diferencia = False
+
+    # Calcules la suma del checker
     while byte != ' ':
-        sum_moduls += ord(byte)-ord('0')
+        caracter = (ord(byte) - ord('0'))
+        if caracter != ord(vector[posicio_vector]) % 10:
+            posicio_errata = posicio_vector
+            num_caracter_error = caracter
+            trobada_diferencia = True
+        suma_checker_text += caracter
         byte = inputfile.read(1)
+        posicio_vector += 1
 
-    # Llegeixes els bytes de la suma
-    while byte:
-        sum_string.append(byte)
-        byte = inputfile.read(1)
-    sum_string = ''.join(sum_string[1:])
-    sum_string = int(sum_string)
+    valor_primer_sumatori = llegir_resultat_suma(inputfile)
+    valor_segon_sumatori = llegir_resultat_suma(inputfile)
 
-    print(suma_comprovacio, file=sys.stderr)
-    print(sum_string, file=sys.stderr)
+    print('Suma del text: ' + str(suma_text), file=sys.stderr)
+    print('Valor del checker: ' + str(suma_checker_text), file=sys.stderr)
+    print('Valor del sumatori: ' + str(valor_primer_sumatori) + ' & ' + str(valor_segon_sumatori) + '.', file=sys.stderr)
 
-    if suma_comprovacio == sum_string and sum_string != sum_moduls:
-        print('OK', file=sys.stderr)
-        print('OK', file=outputfile)
-    elif suma_comprovacio == sum_string:
+    if not trobada_diferencia and suma_text == suma_checker_text and valor_primer_sumatori == suma_checker_text and valor_segon_sumatori == suma_checker_text:
         print('OK', file=sys.stderr)
         print('OK', file=outputfile)
     else:
+        if trobada_diferencia and valor_segon_sumatori == suma_checker_text:
+            print('Posició: ' + str(posicio_errata) + ' ' + vector[posicio_errata], file=sys.stderr)
+            print('Possible caràcter: ' + chr(num_caracter_error + ord('0')), file=sys.stderr)
         print('KO', file=sys.stderr)
         print('KO', file=outputfile)
 
